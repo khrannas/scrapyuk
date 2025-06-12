@@ -1,13 +1,55 @@
-// Asset types
+// Asset types (updated to match backend model)
 export interface Asset {
-  id: string;
-  name: string;
-  url: string;
-  type: string;
-  size: number;
+  id: number;
+  project_id: number;
+  filename: string;
+  file_path: string;
+  uploaded_at: string;
+  // Frontend-specific properties
+  url?: string;
   thumbnail?: string;
-  hasTransparency: boolean;
-  uploadedAt: string;
+  size?: number;
+  dimensions?: {
+    width: number;
+    height: number;
+  };
+  hasTransparency?: boolean;
+  isSelected?: boolean;
+}
+
+// Asset upload types
+export interface AssetUploadProgress {
+  file: File;
+  progress: number;
+  status: 'pending' | 'uploading' | 'completed' | 'error';
+  error?: string;
+  result?: Asset;
+}
+
+export interface AssetUploadOptions {
+  onProgress?: (progress: number) => void;
+  onError?: (error: string) => void;
+  onSuccess?: (asset: Asset) => void;
+}
+
+// Asset management types
+export interface AssetFilter {
+  search?: string;
+  sortBy?: 'filename' | 'uploaded_at' | 'size';
+  sortOrder?: 'asc' | 'desc';
+  dateRange?: {
+    start: Date;
+    end: Date;
+  };
+}
+
+export interface AssetGalleryState {
+  assets: Asset[];
+  selectedAssets: number[];
+  filter: AssetFilter;
+  isLoading: boolean;
+  error: string | null;
+  uploadProgress: AssetUploadProgress[];
 }
 
 // Frame template types
@@ -75,6 +117,7 @@ export interface APIResponse<T> {
   data: T;
   success: boolean;
   message?: string;
+  error?: string;
 }
 
 export interface PaginatedResponse<T> extends APIResponse<T[]> {

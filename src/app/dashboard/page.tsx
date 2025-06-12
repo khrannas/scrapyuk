@@ -3,14 +3,18 @@
 import { useState } from 'react';
 import { ProtectedRoute } from '@/components/auth/ProtectedRoute';
 import { AppLayout } from '@/components/layout/AppLayout';
+import { ProjectDashboard } from '@/components/projects/ProjectDashboard';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useAuth } from '@/hooks/useAuth';
 import { EditorState } from '@/types';
-import { Eye, Edit, Plus, FolderOpen, Settings } from 'lucide-react';
+import { Eye, Edit, Plus, FolderOpen, Settings, TestTube, ArrowLeft } from 'lucide-react';
+import { ProjectManagementDemo } from '@/components/projects/ProjectManagementDemo';
+import Link from 'next/link';
 
 export default function DashboardPage() {
   const { user } = useAuth();
+  const [currentView, setCurrentView] = useState<'overview' | 'projects' | 'demo'>('overview');
   const [editorState, setEditorState] = useState<EditorState>({
     mode: 'edit',
     selectedObjectId: null,
@@ -28,6 +32,48 @@ export default function DashboardPage() {
       showProperties: prev.mode === 'view' ? false : prev.showProperties
     }));
   };
+
+  // If we're in projects view, show the project dashboard
+  if (currentView === 'projects') {
+    return (
+      <ProtectedRoute>
+        <AppLayout editorState={editorState} onEditorStateChange={setEditorState}>
+          <div className="p-6">
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentView('overview')}
+              className="mb-4"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Overview
+            </Button>
+            <ProjectDashboard />
+          </div>
+        </AppLayout>
+      </ProtectedRoute>
+    );
+  }
+
+  // If we're in demo view, show the project management demo
+  if (currentView === 'demo') {
+    return (
+      <ProtectedRoute>
+        <AppLayout editorState={editorState} onEditorStateChange={setEditorState}>
+          <div className="p-6">
+            <Button
+              variant="ghost"
+              onClick={() => setCurrentView('overview')}
+              className="mb-4"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Overview
+            </Button>
+            <ProjectManagementDemo />
+          </div>
+        </AppLayout>
+      </ProtectedRoute>
+    );
+  }
 
   return (
     <ProtectedRoute>
@@ -95,8 +141,11 @@ export default function DashboardPage() {
           </Card>
 
           {/* Quick Actions */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <Card
+              className="hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => setCurrentView('projects')}
+            >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <Plus className="h-5 w-5" />
@@ -113,14 +162,17 @@ export default function DashboardPage() {
               </CardContent>
             </Card>
 
-            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+            <Card
+              className="hover:shadow-md transition-shadow cursor-pointer"
+              onClick={() => setCurrentView('projects')}
+            >
               <CardHeader>
                 <CardTitle className="flex items-center gap-2">
                   <FolderOpen className="h-5 w-5" />
-                  Recent Projects
+                  Manage Projects
                 </CardTitle>
                 <CardDescription>
-                  Continue working on your saved projects
+                  Browse, edit, and organize your saved projects
                 </CardDescription>
               </CardHeader>
               <CardContent>
@@ -143,6 +195,27 @@ export default function DashboardPage() {
               <CardContent>
                 <Button variant="outline" className="w-full">
                   Open Settings
+                </Button>
+              </CardContent>
+            </Card>
+
+            <Card className="hover:shadow-md transition-shadow cursor-pointer">
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <TestTube className="h-5 w-5" />
+                  Project Management Demo
+                </CardTitle>
+                <CardDescription>
+                  Experience the Phase 4 project management system
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <Button
+                  variant="outline"
+                  className="w-full"
+                  onClick={() => setCurrentView('demo')}
+                >
+                  Launch Demo
                 </Button>
               </CardContent>
             </Card>

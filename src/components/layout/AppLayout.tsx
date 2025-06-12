@@ -3,15 +3,23 @@ import { Header } from "./Header";
 import { LeftPanel } from "./LeftPanel";
 import { MainCanvas } from "./MainCanvas";
 import { RightPanel } from "./RightPanel";
-import { EditorState } from "@/types";
+import { EditorState, Asset } from "@/types";
 
 interface AppLayoutProps {
   children?: ReactNode;
   editorState?: EditorState;
   onEditorStateChange?: (state: EditorState) => void;
+  projectId?: number;
+  onAssetUse?: (asset: Asset) => void;
 }
 
-export function AppLayout({ children, editorState, onEditorStateChange }: AppLayoutProps) {
+export function AppLayout({
+  children,
+  editorState,
+  onEditorStateChange,
+  projectId,
+  onAssetUse
+}: AppLayoutProps) {
   return (
     <div className="h-screen bg-background flex flex-col">
       <Header
@@ -27,7 +35,11 @@ export function AppLayout({ children, editorState, onEditorStateChange }: AppLay
         ) : (
           // 3D Editor mode
           <>
-            <LeftPanel editorState={editorState} />
+            <LeftPanel
+              editorState={editorState}
+              projectId={projectId}
+              onAssetUse={onAssetUse}
+            />
             <MainCanvas editorState={editorState} />
             <RightPanel editorState={editorState} />
           </>
