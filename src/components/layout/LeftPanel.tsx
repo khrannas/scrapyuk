@@ -1,8 +1,18 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Upload, Image, Folder } from "lucide-react";
+import { EditorState } from "@/types";
 
-export function LeftPanel() {
+interface LeftPanelProps {
+  editorState?: EditorState;
+}
+
+export function LeftPanel({ editorState }: LeftPanelProps) {
+  // Hide panel in view mode
+  if (editorState?.mode === 'view') {
+    return null;
+  }
+
   return (
     <div className="w-80 bg-panel-surface border-r border-border p-4 space-y-4">
       <Card>

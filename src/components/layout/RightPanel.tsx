@@ -4,8 +4,18 @@ import { Slider } from "@/components/ui/slider";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Settings, Layers, Move3D, Lightbulb } from "lucide-react";
+import { EditorState } from "@/types";
 
-export function RightPanel() {
+interface RightPanelProps {
+  editorState?: EditorState;
+}
+
+export function RightPanel({ editorState }: RightPanelProps) {
+  // Hide panel in view mode
+  if (editorState?.mode === 'view') {
+    return null;
+  }
+
   return (
     <div className="w-80 bg-panel-surface border-l border-border p-4 space-y-4">
       <Card>

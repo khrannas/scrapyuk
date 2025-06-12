@@ -1,7 +1,12 @@
 import { Card } from "@/components/ui/card";
 import { Box, MousePointer2 } from "lucide-react";
+import { EditorState } from "@/types";
 
-export function MainCanvas() {
+interface MainCanvasProps {
+  editorState?: EditorState;
+}
+
+export function MainCanvas({ editorState }: MainCanvasProps) {
   return (
     <div className="flex-1 p-4">
       <Card className="h-full bg-background border-2 border-dashed border-border/50">

@@ -1,0 +1,46 @@
+# Page snapshot
+
+```yaml
+- alert
+- button "Open Next.js Dev Tools":
+  - img
+- banner:
+  - heading "ScrapYuk" [level=1]
+  - text: 3D Pop-up Scrapbook Creator
+  - button "Save"
+  - button "Share"
+  - button "Edit"
+  - button "View"
+  - text: ScrapYuk Admin
+  - button "Logout"
+- heading "Welcome back, ScrapYuk Admin" [level=1]
+- paragraph: Create and manage your 3D scrapbook projects
+- text: "Mode:"
+- button "Edit Mode"
+- paragraph: Edit Mode Active
+- paragraph: Full access to all editing tools, panels, and object manipulation controls
+- text: New Project Start a new 3D scrapbook project with frame templates
+- button "Create Project"
+- text: Recent Projects Continue working on your saved projects
+- button "Browse Projects"
+- text: Workspace Settings Customize your 3D workspace preferences
+- button "Open Settings"
+- text: Recent Activity Your latest project updates and activities
+- paragraph: No recent activity yet.
+- paragraph: Create your first project to get started!
+- text: Edit vs View Mode Features Understanding the difference between editing and viewing modes
+- heading "Edit Mode" [level=4]
+- list:
+  - listitem: • Full toolbar and panels visible
+  - listitem: • Object selection and manipulation
+  - listitem: • Properties panel with layer controls
+  - listitem: • Add, delete, and modify objects
+  - listitem: • Lighting and camera adjustments
+- heading "View Mode" [level=4]
+- list:
+  - listitem: • Clean, minimal interface
+  - listitem: • Focus on 3D canvas presentation
+  - listitem: • Basic camera controls only
+  - listitem: • Perfect for client previews
+  - listitem: • Ideal for final project review
+```
